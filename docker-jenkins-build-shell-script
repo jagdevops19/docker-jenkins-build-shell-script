@@ -1,0 +1,15 @@
+rm -rf docker-jenkins-build
+mkdir docker-jenkins-build
+cd docker-jenkins-build
+
+cp /var/lib/jenkins/workspace/ApplicationPackage/target/addressbook.war .
+
+cat << 'EOF' > Dockerfile
+FROM tomcat
+Maintaineasdsadr "Me"
+ADD addressbook.war /usr/local/tomcat/webapps
+CMD "catalina.sh" "run"
+EOF
+
+sudo docker build . -t jagdevops/automatedaddressbook:$BUILD_NUMBER
+sudo docker push jagdevops/automatedaddressbook:$BUILD_NUMBER
